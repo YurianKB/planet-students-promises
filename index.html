@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sample Site</title>
+  <link rel="stylesheet" type="text/css" href="static/materialize-css/dist/css/materialize.min.css">
+</head>
+
+<body>
+  <script>
+    function getJSON(url) {//parametro url que está abajo
+      return new Promise(function(resolve, reject) { //retornamos "Promise para poder agregar return o catch después" se necesita retornar la promesa porque si no no se puede ejecutar el "then"
+        var ajax = new XMLHttpRequest(); //"new" indica que es una instancia del objetoXML que sr guarda en AJAX  AJAX es un objeto
+        ajax.open("GET", url) //ajax vete prparando para hacer una petivcion GET con una URL que te voy a proporcionar "solo se está preparando"
+        ajax.send()//aquí ya se está ejecutando despues de prepararse
+        ajax.onreadystatechange = function() { //aquí está dando los estados del AJAX *buscar estados iniciada
+          if (ajax.readyState == 4) {//estados del AJAX!!!!!!!
+            var response = JASON.parse(ajax.responseText)//respuesta del servidor, parse convierte string en objeto
+            resolve(response)
+          }
+        }
+      })
+    }
+
+    getJSON("data/earth-like-results.json"); //aquí está el parametro de la url de JSON
+    .then(function(mensaje){return getJSON(mensaje.results[0])})  //se meten funciones "function()" para que la sincronía no se rompa vuelve a retornar el json
+                  // el return nos sirve para retornar la info de JSON y el índice indica el planeta
+    .then(function(resultado){(console.log(resultado)})
+  </script>
+
+
+  <script src="static/jquery/dist/jquery.min.js"></script>
+  <script src="static/materialize-css/dist/js/materialize.min.js"></script>
+  <script src="static/js/ejemplo.js"></script>
+</body>
+
+</html>
